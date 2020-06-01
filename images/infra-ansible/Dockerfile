@@ -12,11 +12,10 @@ ENV OC_CLIENT_MIRROR=https://mirror.openshift.com/pub/openshift-v3/clients/3.11.
     WORK_DIR=/opt/app-root/src \
     PIP_NO_PYTHON_VERSION_WARNING=true
 
-COPY install-packages .
-COPY requirements.txt .
+COPY requirements.txt install-packages .
 
 RUN echo "enabled=0" >> /etc/yum/pluginconf.d/subscription-manager.conf && \
-		yum install -y --nodocs $(<install-packages) && \
+    yum install -y --nodocs $(<install-packages) && \
     rm /install-packages && \
     curl $OC_CLIENT_MIRROR | tar -C /usr/local/bin/ -xzf - && \
     ln -s /usr/bin/python2 /usr/bin/python && \

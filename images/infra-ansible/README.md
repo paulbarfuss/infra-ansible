@@ -1,44 +1,3 @@
-<<<<<<< HEAD
-### infra-ansible container image specs
-
-potential base images:
-
-ubi8/python-38
-ubi8/python-36
-ubi8/minimal
-ubi7/python-36
-
-pypi packages:
-
-```
-ansible
-boto
-boto3
-botocore
-Paste
-eventlet
-openstacksdk
-python-ceilometerclient
-python-cinderclient
-python-glanceclient
-python-heatclient
-python-keystoneclient
-python-mistralclient
-python-neutronclient
-python-novaclient
-python-openstackclient
-python-swiftclient
-python-troveclient
-passlib
-shade
-selinux
-```
-
-Other packages:
-
-- httpd-tools (htpasswd)
-- python3-devel
-=======
 # infra-ansible docker image
 
 This image borrows heavily from [casl-ansible](https://github.com/redhat-cop/casl-ansible/blob/master/images/casl-ansible/README.md) for managing permissions and dependencies. The primary difference is this Docker image is based on ubi8 rather than openshift-ansible. For a **Podman/Buildah** approach, it is recommended that you use the [infra-ansible-toolbox](../infra-ansible-toolbox) OCI container image.
@@ -62,6 +21,3 @@ Note that this will mount your ssh keys from a known location and assumes your A
 ```bash
 docker build -t infra-ansible .
 ```
-
->>>>>>> 8db3db1308e69cc26b7925928be1aa4436277102
-
