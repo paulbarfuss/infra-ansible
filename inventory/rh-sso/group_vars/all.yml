@@ -14,3 +14,9 @@ rhsm_repos:
 rhsm_username: "{{ lookup('env', 'RHSM_USER' )}}"
 rhsm_password: "{{ lookup('env', 'RHSM_PASSWD' )}}"
 rhsm_pool: "{{ lookup('env', 'RHSM_POOL' )}}"
+
+# Red Hat Single Sign-On Instance
+#rh_sso_host: rh-sso.example.com
+#rh_sso_protocol: http
+#rh_sso_port: 4444
+rh_sso_ssl_cert_validation: "no"
