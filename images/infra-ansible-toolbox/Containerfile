@@ -5,8 +5,9 @@ LABEL com.github.containers.toolbox="true" \
       usage="This image is intended to be used with the toolbox command" \
       maintainer="Red Hat Communities of Practice"
 
-ENV OC_CLIENT_MIRROR=https://mirror.openshift.com/pub/openshift-v3/clients/3.11.219/linux/oc.tar.gz \
-		PIP_NO_PYTHON_VERSION_WARNING=true
+ENV OC_CLIENT_MIRROR=https://mirror.openshift.com/pub/openshift-v4/clients/oc/4.4/linux/oc.tar.gz \
+	AWS_CLI_ZIP=https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip \
+	PIP_NO_PYTHON_VERSION_WARNING=true
 
 COPY requirements.txt extra-packages missing-docs /
 COPY root/etc/ansible /etc/ansible
@@ -17,10 +18,13 @@ RUN sed -i '/tsflags=nodocs/d' /etc/dnf/dnf.conf && \
     dnf -y install $(<extra-packages) && \
     rm /extra-packages && \
     dnf clean all && \
-    ln -sf /usr/bin/pip2 /usr/bin/pip && \
-    ln -sf /usr/bin/python2.7 /usr/bin/python && \
-    pip install -r /requirements.txt && \
+    ln -sf /usr/bin/pip3 /usr/bin/pip && \
+    ln -sf /usr/bin/python3 /usr/bin/python && \
+    pip3 install -r /requirements.txt && \
     rm /requirements.txt && \
-    curl $OC_CLIENT_MIRROR | tar -C /usr/local/bin/ -xzf -
+    curl ${OC_CLIENT_MIRROR} | tar -C /usr/local/bin/ -xzf - \
+    curl ${AWS_CLI_ZIP} -o "awscliv2.zip" \
+    unzip awscliv2.zip \
+    ./aws/install
 
 CMD /bin/sh
