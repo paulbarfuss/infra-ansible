@@ -25,6 +25,23 @@
   when:
     - schedule.unified_job_template is defined
 
+- name: "Get the inventory ID based on the inventory name"
+  block:
+    - name: "Get the inventory_id"
+      rest_get:
+        host_url: "{{ ansible_tower.url | default(default_ansible_tower_url) }}"
+        rest_user: "{{ ansible_tower.admin_username | default(default_ansible_tower_admin_username) }}"
+        rest_password: "{{ ansible_tower.admin_password }}"
+        api_uri: "/api/v2/inventories/?name={{ schedule.inventory }}"
+      register: r_inventory
+    - name: "Set inventory_id fact"
+      set_fact:
+        inventory_id: "{{ r_inventory.rest_output[0].id | int }}"
+      when:
+        - r_inventory_id.rest_output | length > 0
+  when:
+    - schedule.inventory is defined
+
 - name: "Load up the schedule"
   uri:
     url: "{{ ansible_tower.url | default(default_ansible_tower_url) }}/api/v2/schedules/"
