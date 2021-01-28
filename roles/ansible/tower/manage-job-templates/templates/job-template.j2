@@ -25,7 +25,7 @@
     "ask_skip_tags_on_launch": false,
     "ask_job_type_on_launch": false,
     "ask_verbosity_on_launch": false,
-    "ask_inventory_on_launch": false,
+    "ask_inventory_on_launch": {{ job_template.ask_inventory_on_launch | default(false) }},
     "ask_credential_on_launch": false,
     "survey_enabled": false,
     "become_enabled": {{ job_template.enable_privilege_escalation | default(false) }},
