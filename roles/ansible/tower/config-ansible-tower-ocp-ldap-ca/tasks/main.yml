@@ -1,0 +1,6 @@
+---
+
+- name: Set LDAP CA certificate in Ansible Tower
+  include_tasks: ocp_set_ca_certificate.yml
+  when: 
+    - ansible_tower.ldap.ca_cert is defined
